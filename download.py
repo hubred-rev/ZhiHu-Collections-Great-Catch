@@ -146,17 +146,19 @@ def da(li,pa):
             h=h.replace(ln,'.%s'%'/'.join(p2.split('/'.join(pa.split('/')[:-1]))[1:]).replace('//','/%s'%'.'.join(pa.split('/')[-1:][0].split('.')[:-1])))
         print(ln,p2)
     f=open(pa,'w+');f.write(h.replace('.js',''));f.close()
+'''
 def catch_comments(i,t):
     print(t,i)
     if t=='answer':
-        return eval(r.get('https://www.zhihu.com/api/v4/answers/%d/comments'%i).text.replace('true','True').replace('false','False'))
+        return eval(r.get('https://www.zhihu.com/api/v4/answers/%s/comments'%i).text.replace('true','True').replace('false','False'))
     elif t=='article':
-        return eval(r.get('https://www.zhihu.com/api/v4/articles/%d/comments'%i).text.replace('true','True').replace('false','False'))
+        return eval(r.get('https://www.zhihu.com/api/v4/articles/%s/comments'%i).text.replace('true','True').replace('false','False'))
     elif t=='pin':
-        return eval(r.get('https://www.zhihu.com/api/v4/pins/%d/comments'%i).text.replace('true','True').replace('false','False'))
+        return eval(r.get('https://www.zhihu.com/api/v4/pins/%s/comments'%i).text.replace('true','True').replace('false','False'))
     elif t=='zvideo':
-        return eval(r.get('https://www.zhihu.com/api/v4/zvideos/%d/comments'%i).text.replace('true','True').replace('false','False'))
+        return eval(r.get('https://www.zhihu.com/api/v4/zvideos/%s/comments'%i).text.replace('true','True').replace('false','False'))
     else:raise TypeError
+'''
 for a in os.walk('items'):
     for b in a[2]:
         op='%s/%s'%(a[0],b)
@@ -173,15 +175,17 @@ for a in os.walk('items'):
         tll=len(tl)
         for c in range(tll):
             i=tl[c]
+            '''
             rcc=True
             ed='%s/%s_comments.dict'%(tp,str(c+1).rjust(6).replace(' ','0'))
             if os.path.exists(ed):rcc=False
             if not os.path.exists(pp:='/'.join(ed.split('/')[:-1])):os.makedirs(pp)
             if rcc:
                 print(i['data-zop']['type'],'comments cathcing...')
-                co=catch_comments(i['data-zop']['itemId'],i['data-zop']['type'])
+                co=catch_comments(str(i['data-zop']['itemId']),i['data-zop']['type'])
                 print(ed)
                 f=open(ed,'w+');f.write(repr(co));f.close()
+            '''
             ed='%s/%s.htm'%(tp,str(c+1).rjust(6).replace(' ','0'))
             if os.path.exists(ed):continue
             print(i['data-zop']['type'],'identity catching...')
