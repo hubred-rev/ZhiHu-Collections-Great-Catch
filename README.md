@@ -9,7 +9,7 @@
 
 1.python -m pip install -r requirements.txt或pip install -r requirements.txt。
 
-2.安裝好![geckodriver](https://github.com/mozilla/geckodriver)，參照geckodriver的使用教程。
+2.安裝好![geckodriver](https://github.com/mozilla/geckodriver)，參照![geckodriver](https://github.com/mozilla/geckodriver)的使用教程。
 
 3.修改sele.py中的gong-ge-cheng-52修改為你所要抓取的知乎用戶的HTTP ID。
 
