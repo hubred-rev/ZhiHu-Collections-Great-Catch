@@ -39,13 +39,38 @@ def dehtml(text):
     except:
         print_exc(file=stderr)
         return text
-l=['https://www.zhihu.com/collection/%s'%a.split('"')[0]for a in r.get('https://www.zhihu.com/people/gong-ge-cheng-52/collections').text.split('href="/collection/')[1:]]
-fl=[]
-h=r.get('https://www.zhihu.com/people/gong-ge-cheng-52/collections/following').text
-p=int(h.split('<div class="Pagination">')[1].split('下一页')[0].split('</button>')[-2:][0].split('>')[1])
+br=wd.Firefox()
+#l=['https://www.zhihu.com/collection/%s'%a.split('"')[0]for a in r.get('https://www.zhihu.com/people/lao-liang-83-95/collections').text.split('href="/collection/')[1:]]
+did='gong-ge-cheng-52'
+l=[]
+h=r.get('https://www.zhihu.com/people/%s/collections'%did).text
+if'<div class="Pagination">'in h:
+    p=int(h.split('<div class="Pagination">')[1].split('下一页')[0].split('</button>')[-2:][0].split('>')[1])
+else:p=1
 for a in range(p):
-    h=r.get('https://www.zhihu.com/people/gong-ge-cheng-52/collections/following?page=%d'%(a+1)).text
+    br.get('https://www.zhihu.com/people/%s/collections?page=%d'%(did,p-a))
+    time.sleep(3)
+    h=br.page_source
     h=['https://www.zhihu.com/collection/%s'%b.split('"')[0]for b in h.split('href="/collection/')[1:]]
+    h2=[]
+    for b in range(len(h)):
+        h2.append(h[len(h)-1-b])
+    h=h2
+    l.extend(h)
+fl=[]
+h=r.get('https://www.zhihu.com/people/%s/collections/following'%did).text
+if'<div class="Pagination">'in h:
+    p=int(h.split('<div class="Pagination">')[1].split('下一页')[0].split('</button>')[-2:][0].split('>')[1])
+else:p=1
+for a in range(p):
+    br.get('https://www.zhihu.com/people/%s/collections/following?page=%d'%(did,p-a))
+    time.sleep(3)
+    h=br.page_source
+    h=['https://www.zhihu.com/collection/%s'%b.split('"')[0]for b in h.split('href="/collection/')[1:]]
+    h2=[]
+    for b in range(len(h)):
+        h2.append(h[len(h)-1-b])
+    h=h2
     fl.extend(h)
 print(l)
 print(fl)
@@ -59,7 +84,6 @@ for a in l:
 for a in fl:
     t=eval(r.get('https://api.zhihu.com/collections/%s'%(i:=a.split('/collection/')[1])).text.replace('true','True').replace('false','False'))
     f=open('following_indexs/%s.dict'%i,'w+');f.write(repr(t));f.close()
-br=wd.Firefox()
 nnn=0
 for a in l:
     nnn+=1
@@ -75,7 +99,7 @@ for a in l:
         print('第%d頁。'%(nm-b))
         br.get('%s?page=%d'%(a,nm-b))
         time.sleep(5)
-        it=[{'data-zop':eval(dehtml(c.split('data-zop="')[1].split('"')[0]))}if('//www.zhihu.com/question/'not in c)else{'data-zop':eval(dehtml(c.split('data-zop="')[1].split('"')[0])),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
+        it=[{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False'))}if('//www.zhihu.com/question/'not in c)else{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False')),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
         it2=[]
         for c in range(len(it)):
             it2.append(it[len(it)-c-1])
@@ -97,7 +121,7 @@ for a in fl:
         print('第%d頁。'%(nm-b))
         br.get('%s?page=%d'%(a,nm-b))
         time.sleep(5)
-        it=[{'data-zop':eval(dehtml(c.split('data-zop="')[1].split('"')[0]))}if('//www.zhihu.com/question/'not in c)else{'data-zop':eval(dehtml(c.split('data-zop="')[1].split('"')[0])),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
+        it=[{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False'))}if('//www.zhihu.com/question/'not in c)else{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False')),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
         it2=[]
         for c in range(len(it)):
             it2.append(it[len(it)-c-1])
