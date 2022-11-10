@@ -11,7 +11,7 @@
 
 2.安裝好![geckodriver](https://github.com/mozilla/geckodriver)，參照![geckodriver](https://github.com/mozilla/geckodriver)的使用教程。
 
-3.修改sele.py中的gong-ge-cheng-52修改為你所要抓取的知乎用戶的HTTP ID。
+3.修改sele.py中的lao-liang-83-95修改為你所要抓取的知乎用戶的HTTP TOKEN。
 
 4.python sele.py，抓取收藏夾索引文件。
 
