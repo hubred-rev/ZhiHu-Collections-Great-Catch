@@ -79,10 +79,10 @@ if not os.path.exists('indexs'):
 if not os.path.exists('following_indexs'):
     os.makedirs('following_indexs')
 for a in l:
-    t=eval(r.get('https://api.zhihu.com/collections/%s'%(i:=a.split('/collection/')[1])).text.replace('true','True').replace('false','False'))
+    t=eval(r.get('https://api.zhihu.com/collections/%s'%(i:=a.split('/collection/')[1])).text.replace('true','True').replace('false','False').replace('null',None))
     f=open('indexs/%s.dict'%i,'w+');f.write(repr(t));f.close()
 for a in fl:
-    t=eval(r.get('https://api.zhihu.com/collections/%s'%(i:=a.split('/collection/')[1])).text.replace('true','True').replace('false','False'))
+    t=eval(r.get('https://api.zhihu.com/collections/%s'%(i:=a.split('/collection/')[1])).text.replace('true','True').replace('false','False').replace('null',None))
     f=open('following_indexs/%s.dict'%i,'w+');f.write(repr(t));f.close()
 nnn=0
 for a in l:
@@ -99,7 +99,7 @@ for a in l:
         print('第%d頁。'%(nm-b))
         br.get('%s?page=%d'%(a,nm-b))
         time.sleep(5)
-        it=[{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False'))}if('//www.zhihu.com/question/'not in c)else{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False')),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
+        it=[{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False').replace('null',None))}if('//www.zhihu.com/question/'not in c)else{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False').replace('null',None)),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
         it2=[]
         for c in range(len(it)):
             it2.append(it[len(it)-c-1])
@@ -121,7 +121,7 @@ for a in fl:
         print('第%d頁。'%(nm-b))
         br.get('%s?page=%d'%(a,nm-b))
         time.sleep(5)
-        it=[{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False'))}if('//www.zhihu.com/question/'not in c)else{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False')),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
+        it=[{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False').replace('null',None))}if('//www.zhihu.com/question/'not in c)else{'data-za-extra-module':eval(dehtml(c.split('data-za-extra-module="')[1].split('"')[0]).replace('true','True').replace('false','False').replace('null',None)),'link':'https://www.zhihu.com/question/%s'%c.split('//www.zhihu.com/question/')[1].split('"')[0]}for c in br.page_source.split('<div class="Pagination">')[0].split('<div class="jsNavigable CollectionDetailPageItem css-vurnku">')[1:]]
         it2=[]
         for c in range(len(it)):
             it2.append(it[len(it)-c-1])
