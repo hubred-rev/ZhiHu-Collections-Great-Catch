@@ -41,7 +41,7 @@ def dehtml(text):
         return text
 br=wd.Firefox()
 #l=['https://www.zhihu.com/collection/%s'%a.split('"')[0]for a in r.get('https://www.zhihu.com/people/lao-liang-83-95/collections').text.split('href="/collection/')[1:]]
-did='gong-ge-cheng-52'
+did='lao-liang-83-95'
 l=[]
 h=r.get('https://www.zhihu.com/people/%s/collections'%did).text
 if'<div class="Pagination">'in h:
