@@ -17,7 +17,7 @@
 
 5.安裝好yt-dlp（在GitHub下載）。
 
-6.python download.py，完全下載收藏夾內答案、影片、專欄、想法。
+6.python download.py，包括評論、本體無JS網頁和圖片完全下載收藏夾內答案、影片、專欄、想法。
 
 # 抓取效果
 
