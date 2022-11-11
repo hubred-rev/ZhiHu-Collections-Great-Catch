@@ -3,9 +3,15 @@ import requests as r
 from selenium import webdriver as wd
 from selenium.webdriver.common.by import By
 br=wd.Firefox()
+def cyreq(li):
+    time.sleep(1)
+    return req(li)
+def req(li):
+    try:return r.get(li)
+    except:return cyreq(li)
 def dp(li,pa):
     if not(pa[-4:]=='.htm'or pa[-5:]=='.html'):raise TypeError
-    h=r.get(li).text
+    h=req(li).text
     imgs=[a.split('>')[0]for a in h.split('<img')[1:]if'src'in a.split('>')[0]]
     if not os.path.exists(p:='%s/%s_Images'%('/'.join(pa.split('/')[:-1]),'.'.join(pa.split('/')[-1:][0].split('.')[:-1]))):os.makedirs(p)
     for a in imgs:
@@ -87,7 +93,7 @@ def di(li,pa):
         h=h.replace(h.split(b.split('/')[-1:][0])[0].split('src="')[-1:][0].split('"')[0],'.%s'%b.split('/'.join(p3.split('/')[:-1]))[1])
     f=open(pa,'w+');f.write(h);f.close()
 def dzv(li,pa):
-    h=r.get(li).text
+    h=req(li).text
     pd='/'.join(pa.split('/')[:-1])
     if not os.path.exists(pd):os.makedirs(pd)
     p='%s/%s.mp4'%(pd,'.'.join(pa.split('/')[-1:][0].split('.')[:-1]))
