@@ -1,8 +1,11 @@
-import os,time
+import os,time,sys
 import requests as r
 from selenium import webdriver as wd
 from selenium.webdriver.common.by import By
 br=wd.Firefox()
+def restart():
+    python=sys.executable
+    os.execl(python,python,*sys.argv)
 def cyreq(li):
     time.sleep(1)
     return req(li)
@@ -195,11 +198,13 @@ for a in os.walk('items'):
             ed='%s/%s.htm'%(tp,str(c+1).rjust(6).replace(' ','0'))
             if os.path.exists(ed):continue
             print(i['data-zop']['type'],'identity catching...')
-            if i['data-zop']['type']=='answer':
-                dp('%s/answer/%s'%(i['link'],i['data-zop']['itemId']),ed)
-            elif i['data-zop']['type']=='article':
-                da('https://zhuanlan.zhihu.com/p/%s'%i['data-zop']['itemId'],ed)
-            elif i['data-zop']['type']=='pin':
-                di('https://www.zhihu.com/pin/%s'%i['data-zop']['itemId'],ed)
-            else:
-                dzv('https://www.zhihu.com/zvideo/%s'%i['data-zop']['itemId'],ed)
+            try:
+                if i['data-zop']['type']=='answer':
+                    dp('%s/answer/%s'%(i['link'],i['data-zop']['itemId']),ed)
+                elif i['data-zop']['type']=='article':
+                    da('https://zhuanlan.zhihu.com/p/%s'%i['data-zop']['itemId'],ed)
+                elif i['data-zop']['type']=='pin':
+                    di('https://www.zhihu.com/pin/%s'%i['data-zop']['itemId'],ed)
+                else:
+                    dzv('https://www.zhihu.com/zvideo/%s'%i['data-zop']['itemId'],ed)
+            except:restart()
